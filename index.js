@@ -3,6 +3,7 @@ const http = require("http");
 const fs = require("fs");
 var requests = require("requests");
 const homeFile = fs.readFileSync("home.html", "utf-8");
+require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 const replaceVal = (tempVal, orgVal) => {
   let temperature = tempVal.replace("{%tempval%}", orgVal.main.temp);
