@@ -3,7 +3,7 @@ const http = require("http");
 const fs = require("fs");
 var requests = require("requests");
 const homeFile = fs.readFileSync("home.html", "utf-8");
-
+const PORT = process.env.PORT || 3000;
 const replaceVal = (tempVal, orgVal) => {
   let temperature = tempVal.replace("{%tempval%}", orgVal.main.temp);
   temperature = temperature.replace("{%tempmin%}", orgVal.main.temp_min);
@@ -35,4 +35,4 @@ const server = http.createServer((req, res) => {
       });
   }
 });
-server.listen(3000,"127.0.0.1");
+server.listen(PORT,"127.0.0.1");
