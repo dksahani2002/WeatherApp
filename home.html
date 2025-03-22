@@ -8,14 +8,13 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
       integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ=="
       crossorigin="anonymous"
-    /> 
+    />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
       *{
           padding: 0;
           margin: 0;
           font-family: "Quicksand",sans-serif;
-          
       }
       body{
           background: #f3f2ef;
@@ -25,15 +24,6 @@
           flex-wrap: wrap;
           height: 100vh;
           width: 100vw;
-
-      }
-      html,
-      body{
-          /* font-size: 62.5%; */
-          height: 100vh;
-      }
-      html{
-          background:#eee;
       }
       .box{
           width: 100vw;
@@ -43,19 +33,8 @@
           background: #a5bbdd;
           position: relative;
           overflow: hidden;
-          transform: translate3d(0,0,0);
           min-width: 40rem;
           min-height: 50rem;
-      }
-      .box:after{
-          content: "";
-          display: block;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 11;
-          transform: translate3d(0,1,0);
       }
       .wave{
           opacity: 0.3;
@@ -65,38 +44,21 @@
           background: white;
           width: 50rem;
           margin-left: -25rem;
-          margin-right: -25rem;
           transform-origin: 50% 48%;
           border-radius: 43%;
           animation: drift 3000ms infinite linear;
           z-index: 1;
-      } 
-      .wave.-three{
-          animation: drift 5000ms infinite linear;
-          z-index: 3 !important;
-          opacity: 0.3;
-      }
-      .wave.-two{
-          animation: drift 7000ms infinite linear;
-          z-index: 2 !important;
-          opacity: 0.2;
-      } 
-      .wave.-one{
-          animation: drift 7000ms infinite linear;
-          z-index: 1 !important;
-          opacity: 0.1;
       }
       @keyframes drift{
           from{
               transform: rotate(0deg);
-
           }
-          from{
+          to{
               transform: rotate(360deg);
           }
       }
       .info{
-          display:block ;
+          display: block;
           bottom: 0;
           width: 100%;
           height: 45%;
@@ -107,7 +69,6 @@
           text-align: center;
           font-weight: 800;
           font-size: 3rem;
-          font-weight: 600;
       }
       .fa-street-view{
           animation: rotates 3s linear infinite alternate;
@@ -119,9 +80,9 @@
           to{
               transform: translateX(0.5rem);
           }
-      } 
+      }
       .temp{
-          margin-top:2.5rem;
+          margin-top: 2.5rem;
           text-align: center;
           font-size: 3rem;
       }
@@ -144,7 +105,7 @@
           height: 40%;
           display: flex;
           justify-content: center;
-          align-items: center; 
+          align-items: center;
       }
       #weathercon .fas{
           font-size: 6rem;
@@ -162,68 +123,73 @@
     <title>WeatherApp</title>
   </head>
   <body>
-      <div class="box"> 
-        
-        <div class="wave -one"></div>
-        <div class="wave -two"></div>
-        <div class="wave -three"></div>
-        <div class="wave -four"></div> 
+    <div class="box">
+      <div class="wave -one"></div>
+      <div class="wave -two"></div>
+      <div class="wave -three"></div>
 
-        <div id="weathercon">
-            <i class="fas fa-sun" style="color: #eccc68"></i>
-        </div>
+      <div id="weathercon">
+        <i class="fas fa-sun" style="color: #eccc68"></i>
+      </div>
 
-        <div class="info"> 
-            <h2 class="location">
-                <i class="fas fa-street-view" style="color:#fff"></i>{%location%}, {%country%}
-            </h2>
-            <p id="date">MON | APRIL 03 | 19:44</p>
-            <h1 class="temp">{%tempval%}&deg;F</h1>
-            <h3 class="tempmin_max">Min {%tempmin%}&deg;F | Max {%tempmax%}&deg;F</h3>
-        </div>
+      <div class="info">
+        <h2 class="location">
+          <i class="fas fa-street-view" style="color:#fff"></i> {%location%}, {%country%}
+        </h2>
+        <p id="date"></p>
+        <h1 class="temp">{%tempval%}&deg;F</h1>
+        <h3 class="tempmin_max">Min {%tempmin%}&deg;F | Max {%tempmax%}&deg;F</h3>
+      </div>
+    </div>
 
-    </div> 
     <script>
-      const curDate= document.getElementById("date");
+      const curDate = document.getElementById("date");
       let weathercon = document.getElementById("weathercon");
 
-      const tempStatus ="{%tempstatus%}";
-      if(tempStatus=="Sunny"){
+      const tempStatus = "{%tempstatus%}";
+
+      if (tempStatus === "Sunny") {
         weathercon.innerHTML = "<i class='fas fa-sun' style='color: #eccc68'></i>";
-      }else if(tempStatus=="Clouds"){
+      } else if (tempStatus === "Clouds") {
         weathercon.innerHTML = "<i class='fas fa-cloud' style='color: #f1f2f6'></i>";
-      }else if(tempStatus=="Rainy"){
+      } else if (tempStatus === "Rainy") {
         weathercon.innerHTML = "<i class='fas fa-cloud-rain' style='color: #a4b0be'></i>";
-      }else{
+      } else {
         weathercon.innerHTML = "<i class='fas fa-sun' style='color: #eccc68'></i>";
       }
-      const getCurrentDay=()=>{
-        const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
+      const getCurrentDay = () => {
+        const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
         let d = new Date();
-        // let day= weekday[d.getDay()]; 
-         let day = weekday[d.getDay()];
-         return day;
-      }
+        return weekday[d.getDay()];
+      };
 
-      const getCurrentTime =()=>{
-        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      const getCurrentTime = () => {
+        var months = [
+          "January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"
+        ];
+        
         var nowtime = new Date();
-        var month =  months[nowtime.getMonth()+1];
-        var date =  nowtime.getDate(); 
+        var month = months[nowtime.getMonth()]; 
+        var date = nowtime.getDate();
         let hours = nowtime.getHours();
         let mins = nowtime.getMinutes();
-        if(hours>11){
-          perios="PM";
-          if(hours>12)hours-=12;
+        let period = "AM";
+
+        if (hours >= 12) {
+          period = "PM";
+          if (hours > 12) hours -= 12;
         }
-        if(mins<10){
-          mins="0"+mins;
-        } 
-        return `${month}${date} | ${hours}:${mins}${perios}`;
+
+        if (mins < 10) {
+          mins = "0" + mins;
+        }
+
+        return `${month} ${date} | ${hours}:${mins} ${period}`;
       };
+
       curDate.innerHTML = getCurrentDay() + " | " + getCurrentTime();
-      
     </script>
   </body>
 </html>
